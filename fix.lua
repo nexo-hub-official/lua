@@ -1,7 +1,7 @@
 
 
 if debugX then
-	warn('Initialising Rayfield')
+	warn('Initialising Nexo GUI')
 end
 
 local function getService(name)
@@ -62,13 +62,13 @@ end
 local requestsDisabled = true 
 local InterfaceBuild = '3K3W'
 local Release = "Build 1.68"
-local RayfieldFolder = "Rayfield"
+local RayfieldFolder = "Nexo GUI"
 local ConfigurationFolder = RayfieldFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
 local settingsTable = {
 	General = {
 		
-		rayfieldOpen = {Type = 'bind', Value = 'K', Name = 'Rayfield Keybind'},
+		rayfieldOpen = {Type = 'bind', Value = 'K', Name = 'Nexo GUI Keybind'},
 		
 		
 
@@ -125,7 +125,7 @@ local function callSafely(func, ...)
 	if func then
 		local success, result = pcall(func, ...)
 		if not success then
-			warn("Rayfield | Function failed with error: ", result)
+			warn("Nexo GUI | Function failed with error: ", result)
 			return false
 		else
 			return result
@@ -154,7 +154,7 @@ local function loadSettings()
 			
 			if useStudio then
 				file = [[
-		{"General":{"rayfieldOpen":{"Value":"K","Type":"bind","Name":"Rayfield Keybind","Element":{"HoldToInteract":false,"Ext":true,"Name":"Rayfield Keybind","Set":null,"CallOnChange":true,"Callback":null,"CurrentKeybind":"K"}}},"System":{"usageAnalytics":{"Value":false,"Type":"toggle","Name":"Anonymised Analytics","Element":{"Ext":true,"Name":"Anonymised Analytics","Set":null,"CurrentValue":false,"Callback":null}}}}
+		{"General":{"rayfieldOpen":{"Value":"K","Type":"bind","Name":"Nexo GUI Keybind","Element":{"HoldToInteract":false,"Ext":true,"Name":"Nexo GUI Keybind","Set":null,"CallOnChange":true,"Callback":null,"CurrentKeybind":"K"}}},"System":{"usageAnalytics":{"Value":false,"Type":"toggle","Name":"Anonymised Analytics","Element":{"Ext":true,"Name":"Anonymised Analytics","Set":null,"CurrentValue":false,"Callback":null}}}}
 	]]
 			end
 
@@ -190,7 +190,7 @@ local function loadSettings()
 			else
 				for settingName, settingValue in overriddenSettings do
 					local split = string.split(settingName, ".")
-					assert(#split == 2, "Rayfield | Invalid overridden setting name: " .. settingName)
+					assert(#split == 2, "Nexo GUI | Invalid overridden setting name: " .. settingName)
 					local categoryName = split[1]
 					local settingNameOnly = split[2]
 					if settingsTable[categoryName] and settingsTable[categoryName][settingNameOnly] then
@@ -204,7 +204,7 @@ local function loadSettings()
 
 	if not success then 
 		if writefile then
-			warn('Rayfield had an issue accessing configuration saving capability.')
+			warn('Nexo GUI had an issue accessing configuration saving capability.')
 		end
 	end
 end
@@ -257,9 +257,9 @@ if not requestsDisabled then
 		end
 	end
 	if cachedSettings and (#cachedSettings == 0 or (cachedSettings.System and cachedSettings.System.usageAnalytics and cachedSettings.System.usageAnalytics.Value)) then
-		sendReport("execution", "Rayfield")
+		sendReport("execution", "Nexo GUI")
 	elseif not cachedSettings then
-		sendReport("execution", "Rayfield")
+		sendReport("execution", "Nexo GUI")
 	end
 end
 
@@ -674,7 +674,7 @@ local CoreGui = getService("CoreGui")
 
 
 
-local Rayfield = useStudio and script.Parent:FindFirstChild('Rayfield') or game:GetObjects("rbxassetid://10804731440")[1]
+local Rayfield = useStudio and script.Parent:FindFirstChild('Nexo GUI') or game:GetObjects("rbxassetid://10804731440")[1]
 local buildAttempts = 0
 local correctBuild = false
 local warned
@@ -690,12 +690,12 @@ repeat
 	correctBuild = false
 
 	if not warned then
-		warn('Rayfield | Build Mismatch')
-		print('Rayfield may encounter issues as you are running an incompatible interface version ('.. ((Rayfield:FindFirstChild('Build') and Rayfield.Build.Value) or 'No Build') ..').\n\nThis version of Rayfield is intended for interface build '..InterfaceBuild..'.')
+		warn('Nexo GUI | Build Mismatch')
+		print('Nexo GUI may encounter issues as you are running an incompatible interface version ('.. ((Rayfield:FindFirstChild('Build') and Rayfield.Build.Value) or 'No Build') ..').\n\nThis version of Nexo GUI is intended for interface build '..InterfaceBuild..'.')
 		warned = true
 	end
 
-	toDestroy, Rayfield = Rayfield, useStudio and script.Parent:FindFirstChild('Rayfield') or game:GetObjects("rbxassetid://10804731440")[1]
+	toDestroy, Rayfield = Rayfield, useStudio and script.Parent:FindFirstChild('Nexo GUI') or game:GetObjects("rbxassetid://10804731440")[1]
 	if toDestroy and not useStudio then toDestroy:Destroy() end
 
 	buildAttempts = buildAttempts + 1
@@ -718,14 +718,14 @@ if gethui then
 	for _, Interface in ipairs(gethui():GetChildren()) do
 		if Interface.Name == Rayfield.Name and Interface ~= Rayfield then
 			Interface.Enabled = false
-			Interface.Name = "Rayfield-Old"
+			Interface.Name = "Nexo GUI-Old"
 		end
 	end
 elseif not useStudio then
 	for _, Interface in ipairs(CoreGui:GetChildren()) do
 		if Interface.Name == Rayfield.Name and Interface ~= Rayfield then
 			Interface.Enabled = false
-			Interface.Name = "Rayfield-Old"
+			Interface.Name = "Nexo GUI-Old"
 		end
 	end
 end
@@ -858,9 +858,9 @@ local function getAssetUri(id: any): string
 	if type(id) == "number" then
 		assetUri = "rbxassetid://" .. id
 	elseif type(id) == "string" and not Icons then
-		warn("Rayfield | Cannot use Lucide icons as icons library is not loaded")
+		warn("Nexo GUI | Cannot use Lucide icons as icons library is not loaded")
 	else
-		warn("Rayfield | The icon argument must either be an icon ID (number) or a Lucide icon name (string)")
+		warn("Nexo GUI | The icon argument must either be an icon ID (number) or a Lucide icon name (string)")
 	end
 	return assetUri
 end
@@ -956,7 +956,7 @@ local function LoadConfiguration(Configuration)
 	local success, Data = pcall(function() return HttpService:JSONDecode(Configuration) end)
 	local changed
 
-	if not success then warn('Rayfield had an issue decoding the configuration file, please try delete the file and reopen Rayfield.') return end
+	if not success then warn('Nexo GUI had an issue decoding the configuration file, please try delete the file and reopen Nexo GUI.') return end
 
 	
 	for FlagName, Flag in pairs(RayfieldLibrary.Flags) do
@@ -975,7 +975,7 @@ local function LoadConfiguration(Configuration)
 				end
 			end)
 		else
-			warn("Rayfield | Unable to find '"..FlagName.. "' in the save file.")
+			warn("Nexo GUI | Unable to find '"..FlagName.. "' in the save file.")
 			print("The error above may not be an issue if new elements have been added or not been set values.")
 			
 		end
@@ -1082,7 +1082,7 @@ function RayfieldLibrary:Notify(data)
 		newNotification.Visible = true
 
 		if data.Actions then
-			warn('Rayfield | Not seeing your actions in notifications?')
+			warn('Nexo GUI | Not seeing your actions in notifications?')
 			print("Notification Actions are being sunset for now, keep up to date on when they're back in the discord. (sirius.menu/discord)")
 		end
 
@@ -1524,14 +1524,14 @@ local function createSettings(window)
 		return
 	end
 
-	local newTab = window:CreateTab('Rayfield Settings', 0, true)
+	local newTab = window:CreateTab('Nexo GUI Settings', 0, true)
 
-	if TabList['Rayfield Settings'] then
-		TabList['Rayfield Settings'].LayoutOrder = 1000
+	if TabList['Nexo GUI Settings'] then
+		TabList['Nexo GUI Settings'].LayoutOrder = 1000
 	end
 
-	if Elements['Rayfield Settings'] then
-		Elements['Rayfield Settings'].LayoutOrder = 1000
+	if Elements['Nexo GUI Settings'] then
+		Elements['Nexo GUI Settings'].LayoutOrder = 1000
 	end
 
 	
@@ -1597,7 +1597,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 	if not correctBuild and not Settings.DisableBuildWarnings then
 		task.delay(3, 
 			function() 
-				RayfieldLibrary:Notify({Title = 'Build Mismatch', Content = 'Rayfield may encounter issues as you are running an incompatible interface version ('.. ((Rayfield:FindFirstChild('Build') and Rayfield.Build.Value) or 'No Build') ..').\n\nThis version of Rayfield is intended for interface build '..InterfaceBuild..'.\n\nTry rejoining and then run the script twice.', Image = 4335487866, Duration = 15})		
+				RayfieldLibrary:Notify({Title = 'Build Mismatch', Content = 'Nexo GUI may encounter issues as you are running an incompatible interface version ('.. ((Rayfield:FindFirstChild('Build') and Rayfield.Build.Value) or 'No Build') ..').\n\nThis version of Nexo GUI is intended for interface build '..InterfaceBuild..'.\n\nTry rejoining and then run the script twice.', Image = 4335487866, Duration = 15})		
 			end)
 	end
 
@@ -1640,11 +1640,11 @@ function RayfieldLibrary:CreateWindow(Settings)
 	end
 
 	LoadingFrame.Version.TextTransparency = 1
-	LoadingFrame.Title.Text = Settings.LoadingTitle or "Rayfield"
+	LoadingFrame.Title.Text = Settings.LoadingTitle or "Nexo GUI"
 	LoadingFrame.Subtitle.Text = Settings.LoadingSubtitle or "Interface Suite"
 
-	if Settings.LoadingTitle ~= "Rayfield Interface Suite" then
-		LoadingFrame.Version.Text = "Rayfield UI"
+	if Settings.LoadingTitle ~= "Nexo GUI Interface Suite" then
+		LoadingFrame.Version.Text = "Nexo GUI UI"
 	end
 
 	if Settings.Icon and Settings.Icon ~= 0 and Topbar:FindFirstChild('Icon') then
@@ -1694,7 +1694,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			while true do
 				task.wait(math.random(180, 600))
 				RayfieldLibrary:Notify({
-					Title = "Rayfield Interface",
+					Title = "Nexo GUI Interface",
 					Content = "Enjoying this UI library? Find it at sirius.menu/discord",
 					Duration = 7,
 					Image = 4370033185,
@@ -1757,7 +1757,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			end
 
 			if Settings.Discord.RememberJoins then 
-				callSafely(writefile, RayfieldFolder.."/Discord Invites".."/"..Settings.Discord.Invite..ConfigurationExtension,"Rayfield RememberJoins is true for this invite, this invite will not ask you to join again")
+				callSafely(writefile, RayfieldFolder.."/Discord Invites".."/"..Settings.Discord.Invite..ConfigurationExtension,"Nexo GUI RememberJoins is true for this invite, this invite will not ask you to join again")
 			end
 		end
 	end
@@ -1779,8 +1779,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					Settings.KeySettings.Key[i] = string.gsub(Settings.KeySettings.Key[i], " ", "")
 				end)
 				if not Success then
-					print("Rayfield | "..Key.." Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..Key.." Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 				end
 			end
 		end
@@ -2133,8 +2133,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 1}):Play()
 					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 					Button.Title.Text = "Callback Error"
-					print("Rayfield | "..ButtonSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..ButtonSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 					task.wait(0.5)
 					Button.Title.Text = ButtonSettings.Name
 					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -2637,8 +2637,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 					Input.Title.Text = "Callback Error"
-					print("Rayfield | "..InputSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..InputSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 					task.wait(0.5)
 					Input.Title.Text = InputSettings.Name
 					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -2877,8 +2877,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 							TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 							TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 							Dropdown.Title.Text = "Callback Error"
-							print("Rayfield | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
-							warn('Check docs.sirius.menu for help with Rayfield specific development.')
+							print("Nexo GUI | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
+							warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 							task.wait(0.5)
 							Dropdown.Title.Text = DropdownSettings.Name
 							TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -2967,8 +2967,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 					TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 					Dropdown.Title.Text = "Callback Error"
-					print("Rayfield | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 					task.wait(0.5)
 					Dropdown.Title.Text = DropdownSettings.Name
 					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -3088,8 +3088,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 							TweenService:Create(Keybind, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 							TweenService:Create(Keybind.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 							Keybind.Title.Text = "Callback Error"
-							print("Rayfield | "..KeybindSettings.Name.." Callback Error " ..tostring(Response))
-							warn('Check docs.sirius.menu for help with Rayfield specific development.')
+							print("Nexo GUI | "..KeybindSettings.Name.." Callback Error " ..tostring(Response))
+							warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 							task.wait(0.5)
 							Keybind.Title.Text = KeybindSettings.Name
 							TweenService:Create(Keybind, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -3219,8 +3219,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 					Toggle.Title.Text = "Callback Error"
-					print("Rayfield | "..ToggleSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..ToggleSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 					task.wait(0.5)
 					Toggle.Title.Text = ToggleSettings.Name
 					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -3269,8 +3269,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 					TweenService:Create(Toggle.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 					Toggle.Title.Text = "Callback Error"
-					print("Rayfield | "..ToggleSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..ToggleSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 					task.wait(0.5)
 					Toggle.Title.Text = ToggleSettings.Name
 					TweenService:Create(Toggle, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -3418,8 +3418,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 								TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 								TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 								Slider.Title.Text = "Callback Error"
-								print("Rayfield | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
-								warn('Check docs.sirius.menu for help with Rayfield specific development.')
+								print("Nexo GUI | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
+								warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 								task.wait(0.5)
 								Slider.Title.Text = SliderSettings.Name
 								TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -3452,8 +3452,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 					TweenService:Create(Slider.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
 					Slider.Title.Text = "Callback Error"
-					print("Rayfield | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
+					print("Nexo GUI | "..SliderSettings.Name.." Callback Error " ..tostring(Response))
+					warn('Check docs.sirius.menu for help with Nexo GUI specific development.')
 					task.wait(0.5)
 					Slider.Title.Text = SliderSettings.Name
 					TweenService:Create(Slider, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
@@ -3565,7 +3565,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 		createSettings(Window)
 	end)
 
-	if not success then warn('Rayfield had an issue creating settings.') end
+	if not success then warn('Nexo GUI had an issue creating settings.') end
 
 	return Window
 end
@@ -3679,7 +3679,7 @@ if Topbar:FindFirstChild('Settings') then
 				end
 			end
 
-			Elements.UIPageLayout:JumpTo(Elements['Rayfield Settings'])
+			Elements.UIPageLayout:JumpTo(Elements['Nexo GUI Settings'])
 		end)
 	end)
 
@@ -3753,15 +3753,15 @@ function RayfieldLibrary:LoadConfiguration()
 				end
 			else
 				notified = true
-				RayfieldLibrary:Notify({Title = "Rayfield Configurations", Content = "We couldn't enable Configuration Saving as you are not using software with filesystem support.", Image = 4384402990})
+				RayfieldLibrary:Notify({Title = "Nexo GUI Configurations", Content = "We couldn't enable Configuration Saving as you are not using software with filesystem support.", Image = 4384402990})
 			end
 		end)
 
 		if success and loaded and not notified then
-			RayfieldLibrary:Notify({Title = "Rayfield Configurations", Content = "The configuration file for this script has been loaded from a previous session.", Image = 4384403532})
+			RayfieldLibrary:Notify({Title = "Nexo GUI Configurations", Content = "The configuration file for this script has been loaded from a previous session.", Image = 4384403532})
 		elseif not success and not notified then
-			warn('Rayfield Configurations Error | '..tostring(result))
-			RayfieldLibrary:Notify({Title = "Rayfield Configurations", Content = "We've encountered an issue loading your configuration correctly.\n\nCheck the Developer Console for more information.", Image = 4384402990})
+			warn('Nexo GUI Configurations Error | '..tostring(result))
+			RayfieldLibrary:Notify({Title = "Nexo GUI Configurations", Content = "We've encountered an issue loading your configuration correctly.\n\nCheck the Developer Console for more information.", Image = 4384402990})
 		end
 	end
 
